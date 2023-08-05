@@ -40,12 +40,13 @@ const loginPerson = async (req:Request, res:Response) => {
         }
 
         try{
-            const Secret = process.env.SECRET;
+            const Secret = process.env.SECRET || 'sfslfnslfuhdiysfdsid3u6kt326gi3d2tyyfsd'
 
             const token = sign({
                 id: user._id
             }, Secret);
             return res.status(200).json({
+                "id": user._id,
                 "token": token
             })
 
@@ -62,6 +63,3 @@ const loginPerson = async (req:Request, res:Response) => {
 
 export default loginPerson
 
-function sing(arg0: { id: import("mongoose").Types.ObjectId; }, secret: string | undefined) {
-    throw new Error("Function not implemented.");
-}

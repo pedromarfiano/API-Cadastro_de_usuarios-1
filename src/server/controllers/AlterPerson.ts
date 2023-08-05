@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import person from "../database";
 import { z } from 'zod';
-//import { sign } from 'jsonwebtoken';
+import { hash } from "bcrypt";
 
 type Person =z.infer<typeof personSchema>
 
@@ -27,20 +27,27 @@ const alterPerson = async (req:Request, res:Response) => {
     if(result.success){
         const data:Person = result.data
 
-        if(user[0]){
-            return res.status(200).json(user);
-        } else{
-            return res.status(404).json({
-                "erro": "id invalido"
-            })
-        }
+        const passwordHash = await hash(senha, 8)
+
+        person.findByIdAndUpdate(id, {
+                nome: data.nome,
+                email: data.email,
+                idade: data.idade,
+                senha: passwordHash
+            }
+        ).then(() => {
+            res.status(200).json({
+                "message":"usuario cadastrado"
+            });
+        }).catch((erro) => {
+            return res.status(400).json({"erro":erro})
+        })
+
+    }else{
+        res.status(400).json(result.error)
     }
 
     
 }
 
 export default alterPerson
-
-function sing(arg0: { id: import("mongoose").Types.ObjectId; }, secret: string | undefined) {
-    throw new Error("Function not implemented.");
-}

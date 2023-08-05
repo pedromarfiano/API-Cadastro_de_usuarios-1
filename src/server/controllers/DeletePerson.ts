@@ -19,6 +19,3 @@ const deletePerson = async (req:Request, res:Response) => {
 
 export default deletePerson
 
-function sing(arg0: { id: import("mongoose").Types.ObjectId; }, secret: string | undefined) {
-    throw new Error("Function not implemented.");
-}

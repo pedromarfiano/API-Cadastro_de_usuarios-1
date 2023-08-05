@@ -1,6 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 
-mongoose.connect('mongodb+srv://pedromarfiano:7XaN4NTQYNZ8qKa6@cluster0.vyhxphv.mongodb.net/?retryWrites=true&w=majority').then(() => {
+const pass = process.env.DB_PASS || '7XaN4NTQYNZ8qKa6'
+const user = process.env.DB_USER || 'pedromarfiano'
+
+mongoose.connect(`mongodb+srv://${user}:${pass}@cluster0.vyhxphv.mongodb.net/?retryWrites=true&w=majority`).then(() => {
     console.log('db connected');
 }).catch((error) =>{
     console.log(error);
